@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101010">
+<title>JHR Games — Joga à tua maneira</title>
+<style>
+:root{--bg:#0b0b0c;--panel:#171717;--gold:#d6ad55;--gold2:#f1d58c;--muted:#b9b4a8}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f7f3e9;font-family:Arial,Helvetica,sans-serif}
+header{position:sticky;top:0;z-index:5;background:#101010ee;border-bottom:1px solid #3d321b;backdrop-filter:blur(10px)}
+nav{max-width:1100px;margin:auto;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-weight:900;letter-spacing:1.5px;color:var(--gold2);font-size:1.35rem}.logo span{color:#fff}
+nav a{color:#e9dfc7;text-decoration:none;margin-left:18px;font-size:.92rem}
+main{max-width:1100px;margin:auto;padding:24px 20px 60px}
+.hero{border:1px solid #5a4720;border-radius:22px;padding:clamp(25px,6vw,58px);background:radial-gradient(ellipse at 85% 15%,#59451d 0,transparent 38%),linear-gradient(135deg,#1b1a17,#0d0d0d 65%);overflow:hidden}
+.eyebrow{color:var(--gold2);font-size:.78rem;letter-spacing:3px;font-weight:bold}
+h1{font-size:clamp(2.4rem,7vw,4.8rem);line-height:.98;margin:15px 0;color:#fff}
+h1 em{font-style:normal;color:var(--gold2)}
+.hero p{max-width:560px;color:#d2cbbd;line-height:1.6}
+.btn{display:inline-block;border:0;border-radius:999px;background:linear-gradient(135deg,var(--gold2),#b98931);color:#17120a;font-weight:800;padding:13px 20px;text-decoration:none;cursor:pointer}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:36px 0 16px}
+h2{margin:0;font-size:1.5rem}.section-head p{margin:0;color:var(--muted);font-size:.9rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:var(--panel);border:1px solid #34302a;border-radius:17px;padding:18px;min-height:170px}
+.card .emoji{font-size:2rem}.card h3{margin:12px 0 7px;color:var(--gold2)}.card p{margin:0 0 16px;color:var(--muted);font-size:.9rem;line-height:1.45}
+.card button{background:#292317;border:1px solid #6d5425;color:var(--gold2);padding:10px 14px;border-radius:10px;font-weight:bold;cursor:pointer}
+.game-area{display:none;margin-top:18px;background:#171717;border:1px solid #6d5425;border-radius:18px;padding:20px}
+.game-area.active{display:block}.game-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.close{background:none;border:1px solid #555;color:#eee;border-radius:9px;padding:7px 10px;cursor:pointer}
+.memory{display:grid;grid-template-columns:repeat(4,minmax(55px,1fr));gap:9px;max-width:430px;margin:18px auto}
+.tile{aspect-ratio:1;border:1px solid #80652d;border-radius:12px;background:#292216;color:var(--gold2);font-size:clamp(1.3rem,5vw,2rem);cursor:pointer}
+.tile.open,.tile.matched{background:#3a301d;border-color:var(--gold2)}
+#status{color:var(--gold2);text-align:center;min-height:24px}
+#tapTarget{display:block;margin:18px auto;width:min(230px,70vw);aspect-ratio:1;border-radius:50%;border:3px solid var(--gold2);background:radial-gradient(circle,#e5c477,#8b6424);color:#17120a;font-size:1.2rem;font-weight:900;cursor:pointer}
+footer{border-top:1px solid #342b19;color:#9d9687;text-align:center;padding:25px 15px;font-size:.85rem}
+.small{font-size:.8rem;color:#999}
+@media(max-width:560px){nav a{margin-left:8px;font-size:.8rem}.section-head{align-items:start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><nav><div class="logo">JHR <span>GAMES</span></div><div><a href="#jogos">Jogos</a><a href="#sobre">Sobre</a></div></nav></header>
+<main>
+<section class="hero">
+<div class="eyebrow">O TEU ESPAÇO DE DIVERSÃO</div>
+<h1>JOGA À TUA<br><em>MANEIRA.</em></h1>
+<p>Bem-vindo à JHR Games: um espaço para descobrir jogos e experimentar minijogos criados especialmente para esta plataforma.</p>
+<a class="btn" href="#jogos">Explorar jogos</a>
+</section>
+<div class="section-head" id="jogos"><div><h2>Escolhe o teu jogo</h2><p>Começa por experimentar os nossos minijogos.</p></div></div>
+<section class="grid">
+<article class="card"><div class="emoji">🧠</div><h3>Memória Dourada</h3><p>Encontra os pares iguais e testa a tua memória.</p><button onclick="startMemory()">Jogar agora</button></article>
+<article class="card"><div class="emoji">⚡</div><h3>Toque Rápido</h3><p>Espera pelo sinal e toca no alvo o mais depressa possível.</p><button onclick="startReaction()">Jogar agora</button></article>
+<article class="card"><div class="emoji">🏎️</div><h3>Corridas</h3><p>Categoria reservada para futuros jogos de corrida.</p><span class="small">Em breve</span></article>
+<article class="card"><div class="emoji">⚽</div><h3>Desporto</h3><p>Categoria reservada para futuros jogos de desporto.</p><span class="small">Em breve</span></article>
+</section>
+<section class="game-area" id="game">
+<div class="game-top"><h2 id="gameTitle">Jogo</h2><button class="close" onclick="closeGame()">Fechar ✕</button></div>
+<p id="gameIntro" class="small"></p>
+<div id="gameContent"></div><p id="status" aria-live="polite"></p>
+</section>
+<section id="sobre" class="section-head"><div><h2>Sobre a JHR Games</h2><p>Uma plataforma em crescimento, com espaço para jogos originais e jogos de outros criadores disponibilizados com autorização.</p></div></section>
+</main>
+<footer>© 2026 JHR Games · Preto e dourado · Feito para jogar</footer>
+<script>
+const area=document.getElementById('game'), title=document.getElementById('gameTitle'), intro=document.getElementById('gameIntro'), content=document.getElementById('gameContent'), status=document.getElementById('status');
+function showGame(t,i){area.classList.add('active');title.textContent=t;intro.textContent=i;content.innerHTML='';status.textContent='';area.scrollIntoView({behavior:'smooth',block:'start'});}
+function closeGame(){area.classList.remove('active');}
+function startMemory(){
+ showGame('Memória Dourada','Vira duas cartas de cada vez e encontra os seis pares.');
+ const icons=['🎮','🏆','🚀','⚽','🎧','⭐'];let deck=[...icons,...icons].sort(()=>Math.random()-.5);
+ let first=null,lock=false,matched=0,moves=0;
+ const board=document.createElement('div');board.className='memory';content.appendChild(board);
+ deck.forEach((v)=>{const b=document.createElement('button');b.className='tile';b.textContent='?';b.setAttribute('aria-label','Carta fechada');b.onclick=()=>{
+ if(lock||b.classList.contains('open')||b.classList.contains('matched'))return;
+ b.textContent=v;b.classList.add('open');b.setAttribute('aria-label',v);moves++;
+ if(!first){first={b,v};return}
+ if(first.v===v){first.b.classList.add('matched');b.classList.add('matched');matched+=2;first=null;if(matched===deck.length)status.textContent=`Venceste em ${moves} jogadas! Parabéns!`;}
+ else{lock=true;let prev=first.b;first=null;setTimeout(()=>{prev.textContent='?';b.textContent='?';prev.classList.remove('open');b.classList.remove('open');lock=false;},750);}
+ };board.appendChild(b);});
+}
+let reactionTimer=null;
+function startReaction(){
+ showGame('Toque Rápido','Carrega em “Preparar” e espera o círculo ficar verde. Não toques antes!');
+ const b=document.createElement('button');b.className='btn';b.textContent='Preparar';content.appendChild(b);
+ const target=document.createElement('button');target.id='tapTarget';target.textContent='ESPERA';target.style.display='none';content.appendChild(target);
+ let ready=false,start=0,timeout;
+ b.onclick=()=>{clearTimeout(timeout);ready=false;b.disabled=true;b.textContent='A preparar...';target.style.display='block';target.style.background='#4b3420';target.textContent='ESPERA';timeout=setTimeout(()=>{ready=true;start=performance.now();target.style.background='#69bd75';target.textContent='TOCA!';},1200+Math.random()*2500);};
+ target.onclick=()=>{if(!ready){clearTimeout(timeout);status.textContent='Ainda não! Tenta novamente.';b.disabled=false;b.textContent='Tentar novamente';target.style.display='none';return;}let ms=Math.round(performance.now()-start);status.textContent=`O teu tempo: ${ms} milissegundos!`;ready=false;b.disabled=false;b.textContent='Jogar novamente';target.style.display='none';};
+}
+</script>
+</body>
+</html>
